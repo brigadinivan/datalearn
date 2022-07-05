@@ -15,4 +15,96 @@
 
 Напишите запросы, чтобы ответить на вопросы из Модуля 01.
 
+Total Sales (общая выручка)
+
+select sum(sales) as total_sales             
+from orders;
+
+total_sales |
+------------+
+2297200.8603|
+
+Total Profit (общая прибыль)
+select sum(profit) as total_profit 
+from orders;total_profit           |
+
+total_profit           |
+-----------------------+
+286397.0216999999887055|
+
+Profit Ratio (коэффициент прибыли) profit_ratio = total_profit/total_sales
+
+SELECT 
+sum(profit)/sum(sales) as profit_ratio
+FROM public.orders;
+
+profit_ratio          |
+----------------------+
+0.12467217240315604661|
+
+Profit per Order (прибыль на заказ)
+
+SELECT order_id,
+sum(profit) as profit_per_order
+FROM public.orders
+group by order_id
+order by profit_per_order desc 
+limit 5;
+
+order_id      |profit_per_order     |
+--------------+---------------------+
+CA-2018-118689|8762.3891000000000000|
+CA-2019-140151|6734.4720000000000000|
+CA-2019-166709|5039.9856000000000000|
+CA-2018-117121|4946.3700000000000000|
+CA-2016-116904|4668.6935000000000000|
+
+Sales per Customer (Продажи на клиента)
+
+SELECT customer_id, customer_name,
+sum(sales) as sales_per_customer
+FROM public.orders
+group by customer_id, customer_name 
+order by sales_per_customer desc 
+limit 5;
+
+customer_id|customer_name|sales_per_customer|
+-----------+-------------+------------------+
+SM-20320   |Sean Miller  |        25043.0500|
+TC-20980   |Tamara Chand |        19052.2180|
+RB-19360   |Raymond Buch |        15117.3390|
+TA-21385   |Tom Ashbrook |        14595.6200|
+AB-10105   |Adrian Barton|        14473.5710|
+
+Avg. Discount (Сред. Скидка)
+
+select avg(discount) as average_discount
+FROM public.orders;
+
+average_discount      |
+----------------------+
+0.15620272163297978787|
+
+Monthly Sales by Segment (Ежемесячные продажи по сегментам)
+-- сначала общие продажи по сегментам
+
+select segment, count(sales) 
+FROM public.orders
+group by segment;
+
+segment    |count|
+-----------+-----+
+Consumer   | 5191|
+Corporate  | 3020|
+Home Office| 1783|
+
+
+
+
+select segment, count(sales) 
+FROM public.orders
+where extract ('year' from order_date) = 2015
+group by segment;
+
+
 
