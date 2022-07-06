@@ -32,6 +32,18 @@ total_profit           |
 -----------------------+
 286397.0216999999887055|
 
+сумма прибыли по категориям товаров
+select category, sum(profit)
+FROM public.orders
+group by category;
+
+category       |sum                    |
+---------------+-----------------------+
+Furniture      | 18451.2727999999933410|
+Office Supplies|122490.8007999999985225|
+Technology     |145454.9480999999968420|
+
+
 Profit Ratio (коэффициент прибыли) profit_ratio = total_profit/total_sales
 
 SELECT 
@@ -99,12 +111,38 @@ Corporate  | 3020|
 Home Office| 1783|
 
 
-
-
-select segment, count(sales) 
+select segment, count(sales) as quantity_sales,
+round(sum(sales),1) as total_income,
+round(sum(profit),1) as revenue 
 FROM public.orders
-where extract ('year' from order_date) = 2015
 group by segment;
+
+segment    |quantity_sales|total_income|revenue |
+-----------+--------------+------------+--------+
+Consumer   |          5191|   1161401.3|134119.2|
+Corporate  |          3020|    706146.4| 91979.1|
+Home Office|          1783|    429653.1| 60298.7|
+
+
+пытался сделать выборку по годам))
+
+select segment,
+count(sales) as quantity_sales,
+case	
+when extract ('year' from order_date) = 2016 then '2016'
+when extract ('year' from order_date) = 2017 then '2017'
+when extract ('year' from order_date) = 2018 then '2018'
+when extract ('year' from order_date) = 2019 then '2019'	
+end
+FROM public.orders
+group by segment, order_date
+order by order_date;
+ 
+Monthly Sales by Product Category (Ежемесячные продажи по категориям продуктов)
+
+
+ 
+
 
 
 
