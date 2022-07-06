@@ -124,7 +124,7 @@ Corporate  |          3020|    706146.4| 91979.1|
 Home Office|          1783|    429653.1| 60298.7|
 
 
-пытался сделать выборку по годам))
+выборкf по годам
 
 select segment,
 count(sales) as quantity_sales,
@@ -137,8 +137,50 @@ end
 FROM public.orders
 group by segment, order_date
 order by order_date;
+
+
+select segment, count(sales) as count_sales,
+extract(year from order_date) as year
+FROM public.orders
+group by segment, year
+order by year, segment;
+
+segment    |count_sales|year|
+-----------+-----------+----+
+Consumer   |       1070|2016|
+Corporate  |        611|2016|
+Home Office|        312|2016|
+Consumer   |       1125|2017|
+Corporate  |        636|2017|
+Home Office|        341|2017|
+Consumer   |       1328|2018|
+Corporate  |        793|2018|
+Home Office|        466|2018|
+Consumer   |       1668|2019|
+Corporate  |        980|2019|
+Home Office|        664|2019|
  
-Monthly Sales by Product Category (Ежемесячные продажи по категориям продуктов)
+
+Year Sales by Product Category (Годовые продажи по категориям продуктов)
+
+select category, count(sales) as count_sales,
+extract(year from order_date) as year
+FROM public.orders
+group by category, year
+order by year, category;
+
+category       |count_sales|year|
+---------------+-----------+----+
+Furniture      |        421|2016|
+Office Supplies|       1217|2016|
+Technology     |        355|2016|
+Furniture      |        452|2017|
+Office Supplies|       1241|2017|
+Technology     |        409|2017|
+Furniture      |        562|2018|
+Office Supplies|       1566|2018|
+
+
 
 
  
