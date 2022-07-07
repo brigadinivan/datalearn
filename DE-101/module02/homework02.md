@@ -180,10 +180,66 @@ Technology     |        409|2017|
 Furniture      |        562|2018|
 Office Supplies|       1566|2018|
 
+Sales and Profit by Customer
 
-
+select 
+	customer_id,
+	customer_name,
+	sum(sales) as sales_per_customer,
+	round(sum(profit),1) as profit_per_customer
+from orders
+group by customer_id, customer_name
+order by sales_per_customer desc;
 
  
+ customer_id|customer_name       |sales_per_customer|profit_per_customer|
+-----------+--------------------+------------------+-------------------+
+SM-20320   |Sean Miller         |        25043.0500|            -1980.7|
+TC-20980   |Tamara Chand        |        19052.2180|             8981.3|
+RB-19360   |Raymond Buch        |        15117.3390|             6976.1|
+TA-21385   |Tom Ashbrook        |        14595.6200|             4703.8|
+AB-10105   |Adrian Barton       |        14473.5710|             5444.8|
+
+
+Customer Ranking
+
+select 
+	customer_id,
+	customer_name,
+	round(sum(profit),1) as profit_per_customer
+from orders
+group by customer_id, customer_name
+order by profit_per_customer desc 
+limit 10;
+
+customer_id|customer_name       |profit_per_customer|
+-----------+--------------------+-------------------+
+TC-20980   |Tamara Chand        |             8981.3|
+RB-19360   |Raymond Buch        |             6976.1|
+SC-20095   |Sanjit Chand        |             5757.4|
+HL-15040   |Hunter Lopez        |             5622.4|
+AB-10105   |Adrian Barton       |             5444.8|
+TA-21385   |Tom Ashbrook        |             4703.8|
+CM-12385   |Christopher Martinez|             3899.9|
+ 
+Sales per region
+
+select 
+	region,
+	sum(sales) as sales_per_region,
+	count(sales) as count_per_region 
+from orders
+group by region 
+order by sales_per_region desc;
+
+region |sales_per_region|count_per_region|
+-------+----------------+----------------+
+West   |     725457.8245|            3203|
+East   |     678781.2400|            2848|
+Central|     501239.8908|            2323|
+South  |     391721.9050|            1620|
+
+
 
 
 
