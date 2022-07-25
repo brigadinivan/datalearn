@@ -15,116 +15,108 @@
 
 Напишите запросы, чтобы ответить на вопросы из Модуля 01.
 
-Total Sales (общая выручка)
+## Total Sales (общая выручка)
 
-select sum(sales) as total_sales             
-from orders;
+     select sum(sales) as total_sales             
+     from orders;
 
-total_sales |
-------------+
-2297200.8603|
+       \total_sales |
+        2297200.8603|\
 
-Total Profit (общая прибыль)
-select sum(profit) as total_profit 
-from orders;total_profit           |
+## Total Profit (общая прибыль)
 
-total_profit           |
------------------------+
-286397.0216999999887055|
+     select sum(profit) as total_profit 
+     from orders;
 
-сумма прибыли по категориям товаров
-select category, sum(profit)
-FROM public.orders
-group by category;
+     \total_profit          |
+     286397.0216999999887055|\
 
-category       |sum                    |
----------------+-----------------------+
-Furniture      | 18451.2727999999933410|
-Office Supplies|122490.8007999999985225|
-Technology     |145454.9480999999968420|
+## сумма прибыли по категориям товаров
+     select category, sum(profit)
+     FROM public.orders
+     group by category;
+
+     \category      |sum                    
+     Furniture      | 18451.27|
+     Office Supplies|122490.80|
+     Technology     |145454.94|\
 
 
-Profit Ratio (коэффициент прибыли) profit_ratio = total_profit/total_sales
+## Profit Ratio (коэффициент прибыли) profit_ratio = total_profit/total_sales
 
-SELECT 
-sum(profit)/sum(sales) as profit_ratio
-FROM public.orders;
+     SELECT
+     sum(profit)/sum(sales) as profit_ratio
+     FROM public.orders;
 
-profit_ratio          |
-----------------------+
-0.12467217240315604661|
+     \profit_ratio         |
+     0.12467217240315604661|\
 
-Profit per Order (прибыль на заказ)
+## Profit per Order (прибыль на заказ)
 
-SELECT order_id,
-sum(profit) as profit_per_order
-FROM public.orders
-group by order_id
-order by profit_per_order desc 
-limit 5;
+     SELECT order_id,
+     sum(profit) as profit_per_order
+     FROM public.orders
+     group by order_id
+     order by profit_per_order desc 
+     limit 5;
 
-order_id      |profit_per_order     |
---------------+---------------------+
-CA-2018-118689|8762.3891000000000000|
-CA-2019-140151|6734.4720000000000000|
-CA-2019-166709|5039.9856000000000000|
-CA-2018-117121|4946.3700000000000000|
-CA-2016-116904|4668.6935000000000000|
+     \order_id      |profit_per_order    |
+     CA-2018-118689|8762.3891000000000000|
+     CA-2019-140151|6734.4720000000000000|
+     CA-2019-166709|5039.9856000000000000|
+     CA-2018-117121|4946.3700000000000000|
+     CA-2016-116904|4668.6935000000000000|\
 
-Sales per Customer (Продажи на клиента)
+## Sales per Customer (Продажи на клиента)
 
-SELECT customer_id, customer_name,
-sum(sales) as sales_per_customer
-FROM public.orders
-group by customer_id, customer_name 
-order by sales_per_customer desc 
-limit 5;
+      SELECT customer_id, customer_name,
+      sum(sales) as sales_per_customer
+      FROM public.orders
+      group by customer_id, customer_name 
+      order by sales_per_customer desc 
+      limit 5; 
 
-customer_id|customer_name|sales_per_customer|
------------+-------------+------------------+
-SM-20320   |Sean Miller  |        25043.0500|
-TC-20980   |Tamara Chand |        19052.2180|
-RB-19360   |Raymond Buch |        15117.3390|
-TA-21385   |Tom Ashbrook |        14595.6200|
-AB-10105   |Adrian Barton|        14473.5710|
+      \customer_id|customer_name|sales_per_customer|
+      SM-20320   |Sean Miller  |        25043.0500|
+      TC-20980   |Tamara Chand |        19052.2180|
+      RB-19360   |Raymond Buch |        15117.3390|
+      TA-21385   |Tom Ashbrook |        14595.6200|
+      AB-10105   |Adrian Barton|        14473.5710|
 
-Avg. Discount (Сред. Скидка)
+## Avg. Discount (Сред. Скидка)
 
-select avg(discount) as average_discount
-FROM public.orders;
+      \select avg(discount) as average_discount
+      FROM public.orders;\
 
-average_discount      |
-----------------------+
-0.15620272163297978787|
+      average_discount      |
+      0.15620272163297978787|
 
-Monthly Sales by Segment (Ежемесячные продажи по сегментам)
--- сначала общие продажи по сегментам
+## Monthly Sales by Segment (Ежемесячные продажи по сегментам)
+## общие продажи по сегментам
 
-select segment, count(sales) 
-FROM public.orders
-group by segment;
+     \select segment, count(sales) 
+     FROM public.orders
+     group by segment;\
 
-segment    |count|
------------+-----+
-Consumer   | 5191|
-Corporate  | 3020|
-Home Office| 1783|
+     segment    |count|
+     Consumer   | 5191|
+     Corporate  | 3020|
+     Home Office| 1783|
 
 
-select segment, count(sales) as quantity_sales,
-round(sum(sales),1) as total_income,
-round(sum(profit),1) as revenue 
-FROM public.orders
-group by segment;
+     select segment, count(sales) as quantity_sales,
+     round(sum(sales),1) as total_income,
+     round(sum(profit),1) as revenue 
+     FROM public.orders
+     group by segment;
 
-segment    |quantity_sales|total_income|revenue |
------------+--------------+------------+--------+
-Consumer   |          5191|   1161401.3|134119.2|
-Corporate  |          3020|    706146.4| 91979.1|
-Home Office|          1783|    429653.1| 60298.7|
+     segment    |quantity_sales|total_income|revenue |
+     Consumer   |          5191|   1161401.3|134119.2|
+     Corporate  |          3020|    706146.4| 91979.1|
+     Home Office|          1783|    429653.1| 60298.7|
 
 
-выборкf по годам
+пытался сделать выборку по годам))
 
 select segment,
 count(sales) as quantity_sales,
@@ -137,110 +129,7 @@ end
 FROM public.orders
 group by segment, order_date
 order by order_date;
-
-
-select segment, count(sales) as count_sales,
-extract(year from order_date) as year
-FROM public.orders
-group by segment, year
-order by year, segment;
-
-segment    |count_sales|year|
------------+-----------+----+
-Consumer   |       1070|2016|
-Corporate  |        611|2016|
-Home Office|        312|2016|
-Consumer   |       1125|2017|
-Corporate  |        636|2017|
-Home Office|        341|2017|
-Consumer   |       1328|2018|
-Corporate  |        793|2018|
-Home Office|        466|2018|
-Consumer   |       1668|2019|
-Corporate  |        980|2019|
-Home Office|        664|2019|
  
-
-Year Sales by Product Category (Годовые продажи по категориям продуктов)
-
-select category, count(sales) as count_sales,
-extract(year from order_date) as year
-FROM public.orders
-group by category, year
-order by year, category;
-
-category       |count_sales|year|
----------------+-----------+----+
-Furniture      |        421|2016|
-Office Supplies|       1217|2016|
-Technology     |        355|2016|
-Furniture      |        452|2017|
-Office Supplies|       1241|2017|
-Technology     |        409|2017|
-Furniture      |        562|2018|
-Office Supplies|       1566|2018|
-
-Sales and Profit by Customer
-
-select 
-	customer_id,
-	customer_name,
-	sum(sales) as sales_per_customer,
-	round(sum(profit),1) as profit_per_customer
-from orders
-group by customer_id, customer_name
-order by sales_per_customer desc;
-
- 
- customer_id|customer_name       |sales_per_customer|profit_per_customer|
------------+--------------------+------------------+-------------------+
-SM-20320   |Sean Miller         |        25043.0500|            -1980.7|
-TC-20980   |Tamara Chand        |        19052.2180|             8981.3|
-RB-19360   |Raymond Buch        |        15117.3390|             6976.1|
-TA-21385   |Tom Ashbrook        |        14595.6200|             4703.8|
-AB-10105   |Adrian Barton       |        14473.5710|             5444.8|
-
-
-Customer Ranking
-
-select 
-	customer_id,
-	customer_name,
-	round(sum(profit),1) as profit_per_customer
-from orders
-group by customer_id, customer_name
-order by profit_per_customer desc 
-limit 10;
-
-customer_id|customer_name       |profit_per_customer|
------------+--------------------+-------------------+
-TC-20980   |Tamara Chand        |             8981.3|
-RB-19360   |Raymond Buch        |             6976.1|
-SC-20095   |Sanjit Chand        |             5757.4|
-HL-15040   |Hunter Lopez        |             5622.4|
-AB-10105   |Adrian Barton       |             5444.8|
-TA-21385   |Tom Ashbrook        |             4703.8|
-CM-12385   |Christopher Martinez|             3899.9|
- 
-Sales per region
-
-select 
-	region,
-	sum(sales) as sales_per_region,
-	count(sales) as count_per_region 
-from orders
-group by region 
-order by sales_per_region desc;
-
-region |sales_per_region|count_per_region|
--------+----------------+----------------+
-West   |     725457.8245|            3203|
-East   |     678781.2400|            2848|
-Central|     501239.8908|            2323|
-South  |     391721.9050|            1620|
-
-
-
-
+Monthly Sales by Product Category (Ежемесячные продажи по категориям продуктов)
 
 
