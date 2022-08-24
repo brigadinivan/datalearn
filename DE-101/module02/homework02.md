@@ -138,7 +138,6 @@ order by order_date;
 
 * [база данных в облаке ElephantSQL](https://customer.elephantsql.com/instance)
 
+2.6: Dashboard superstore
 
-
-
-
+* [мой первый даш](https://github.com/brigadinivan/datalearn/blob/main/DE-101/module02/superstore_dashboard.png)
