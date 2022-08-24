@@ -129,13 +129,11 @@ end
 FROM public.orders
 group by segment, order_date
 order by order_date;
- 
-Monthly Sales by Product Category (Ежемесячные продажи по категориям продуктов)
 
-hggggjgjgh
+2.4: Модели данных
+* [схема superstore](https://github.com/brigadinivan/datalearn/blob/main/DE-101/module02/superstore_model.png)
 
 
-!
 
 
 
