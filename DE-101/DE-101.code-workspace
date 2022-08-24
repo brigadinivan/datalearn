@@ -6,6 +6,10 @@
 		{
 			"name": "datalearn",
 			"path": ".."
+		},
+		{
+			"name": "datalearn",
+			"path": "datalearn"
 		}
 	],
 	"settings": {}
