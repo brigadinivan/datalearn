@@ -134,6 +134,11 @@ order by order_date;
 * [схема superstore](https://github.com/brigadinivan/datalearn/blob/main/DE-101/module02/superstore_model.png)
 
 
+2.5: База данных в облаке
+
+* [база данных в облаке ElephantSQL](https://customer.elephantsql.com/instance)
+
+
 
 
 
